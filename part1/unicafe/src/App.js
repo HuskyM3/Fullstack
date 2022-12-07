@@ -18,9 +18,46 @@ const Button = ({ handleClick, text }) => (
 )
 
 const Statistics = (props) => {
-  
+  const [good, bad, neutral] = [props.good, props.bad, props.neutral]
+  const total = good + bad + neutral
+  const average = (good*1+bad*(-1))/total
+  const positive = (good/total)*100
+
+  if (total == 0 ){
+    return(
+    <div>
+      NO DATA 
+    </div>
+    )
+  }
+  return (
+    <div>
+      <StatisticsLine text = 'good' value = {good}/>
+      <StatisticsLine text = 'neutral' value = {neutral}/>
+      <StatisticsLine text = 'bad' value = {bad}/>
+      <StatisticsLine text = 'average' value = {average}/>
+      <StatisticsLine text = 'positive' value = {positive}/> 
+    </div>
+  )
 }
 
+const StatisticsLine = (props) => {
+  const text = props.text
+  const value = props.value
+  if (text == 'positive'){
+    return (
+    <div>
+      {text} {value} %
+    </div>
+    )
+  }
+  return (
+  <div>
+    {text} {value}
+  </div>
+  )
+  
+}
 
 
 const App = () => {
@@ -28,37 +65,19 @@ const App = () => {
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
-  const [all, setAll] = useState(0) // total sum of good, bad and neutral 
-  const [total, setTotal] = useState(0) //-1,0,1 total sum 
-  const [average, calcTotal ] = useState(0) //average
-  const [positive, setPositive] = useState(0)
+
 
 
   const handleGood = () => {
     setGood(good + 1)
-    setAll(all+1)
-    setTotal(total +1)
-    calcTotal((total+1)/(all+1))
-
-    setPositive((good+1)/(all+1))
   }
 
   const handleBad = () => {
     setBad(bad + 1)
-    setAll(all+1)
-    setTotal(total - 1)
-    calcTotal((total-1)/(all+1))
-
-    setPositive(good/(all+1))
   }
 
   const handleNeutral = () => {
     setNeutral(neutral + 1)
-    setAll(all+1)
-    setTotal(total)
-    calcTotal(total/(all+1))
-
-    setPositive(good/(all+1))
   }
 
 
@@ -70,15 +89,7 @@ const App = () => {
       <Button  handleClick = {handleNeutral} text='neutral' />
       <Button  handleClick = {handleGood} text='good' />
       <Tittle name = 'statistics'/>
-      <p>
-      Bad {bad} 
-      <br/> Neutral {neutral}
-      <br/> Good {good}
-      <br/> All {all}
-      <br/> Average {average}
-      <br/> Positive {positive}
-      </p>
-
+      <Statistics good = {good} bad = {bad} neutral = {neutral} />
     </div>
   )
 }
