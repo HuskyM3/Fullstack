@@ -1,82 +1,101 @@
 const Headder = (props) => {
  const ncourse = props.course
+ console.log('check')
   return (
     <div>
-      <p>
       <h1>{ncourse.name}</h1>
-      </p>
+      
     </div>
   )
 
 }
 
-const Content = (props) => {
-  const inner = props.parts.parts
+const Content = ({course}) => {
+  const inner = course.parts
+  const result = inner.map(n => 
+    <p key={n.id}> 
+    <Part cont = {n} /> 
+    </p>)
+
   return (
     <div>
-      <Part n = {inner[0]} e = {inner[0]}/>
-      <Part n = {inner[1]} e = {inner[1]}/>
-      <Part n = {inner[2]} e = {inner[2]}/>
+    {result }
     </div>
   )
 
 }
-const Part = (props) => {
-  const innerN = props.n.name
-  const innerA = props.e.exercises
+const Part = ({cont}) => {
+
+const tent = cont
+  const innerN = tent.name
+  const innerA = tent.exercises
   return (
-    <div>
-      <p>
+      <>
         {innerN} {innerA}
-      </p>
-    </div>
+      </>
   )
 }
 
-const Total = (props) => {
-  const totals = props.parts.parts
-  let sum = 0 
-  for (let i = 0; i < 3; i++){
-    sum += totals[i].exercises;
-  }
+const Total = ({course}) => {
+  const totals = course.parts.map(n=> n.exercises)
+  // jostain syystä Total props ei toimi 
+  const sum = totals.reduce((s, p) => s + p,0)
+  
   return (
-    <div>
       <p>
       Number of exercises {sum}
       </p>
-    </div>
   )
 }
 
 
 
-function App() {
+const Course = (props) => {
+  const course = props.course
+  return (
+    <div>
+      <Headder course = {course} />
+      <Content course = {course} />
+      <Total course = {course} />
+    </div>
+
+  )
+}
+
+
+const App = () => {
   const course = {
+    id: 1,
     name: 'Half Stack application development',
     parts: [
       {
         name: 'Fundamentals of React',
-        exercises: 10
+        exercises: 10,
+        id: 1
       },
       {
         name: 'Using props to pass data',
-        exercises: 7
+        exercises: 7,
+        id: 2
       },
       {
         name: 'State of a component',
-        exercises: 14
+        exercises: 14,
+        id: 3
       }
     ]
   }
 
-
   return (
-    <div>
-      <Headder course={course} />
-      <Content parts = {course} /> 
-      <Total parts = {course} />
-    </div>
+    
+      <Course course={course} />
+
+  
+
+  
   )
 }
+
+
 
 export default App
