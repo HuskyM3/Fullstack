@@ -27,7 +27,7 @@ const Headder = ({course}) => {
   }
   
 
-
+//sdfa 
   const Total = ({course}) => {
     const sum = course.reduce((s, p) => s + p.exercises,0)
     //console.log('total')
