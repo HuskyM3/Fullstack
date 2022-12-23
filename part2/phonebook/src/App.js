@@ -28,22 +28,19 @@ const App = () => {
   const addNote = (event) => { // todennäköisesti alkuperäisessä versiossa tässä meni vihkoon 
     event.preventDefault()
     const noteObject = {
-      content: newNote,
+      name: newNote, // tämän pitää olla sama mikä on siinä arrayssa johon lisätään
       //id: persons.length + 1,
     }
-    
-    console.log(noteObject.content)
 
-    setNotes(persons.concat(noteObject))
-    setNewNote('')
-/*
-    if (persons.find(n=> n.name === noteObject.content)=== undefined ){
+    const test = persons.find(n=> n.name === noteObject.name)
+    console.log(test)
+    if (test === undefined ){
       setNotes(persons.concat(noteObject))
       setNewNote('')
     }else {
-      alert('test')
+      alert(noteObject.name + ' is already added to the phonebook')
     }
-*/
+
 
   }
 
