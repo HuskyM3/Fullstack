@@ -40,8 +40,9 @@ const App = () => {
       number: newNumber,
       //id: persons.length + 1,
     }
-
-    if (persons.includes(noteObject.name)){
+    const test = persons.find(n=> n.name === noteObject.name)
+    console.log(test)
+    if (test === undefined ){
       setNotes(persons.concat(noteObject))
       setNewNote('')
       setNewNumber('')
