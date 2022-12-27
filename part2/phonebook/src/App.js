@@ -74,7 +74,7 @@ return (
 }
 
 const ShowPersons =({persons, newS}) => {
-  const newPersons = persons.filter(name => name.name.includes(newS))
+  const newPersons = persons.filter(name => name.name.toLowerCase().includes(newS.toLowerCase()))
 
   return (
     <div>
