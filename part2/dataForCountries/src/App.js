@@ -20,6 +20,11 @@ const Details = ({country}) => {
       )}
     {country.flag}
     </div>
+    /*
+      <Weather country={country} />
+    */
+
+    
   )
 }
 
@@ -98,5 +103,31 @@ useEffect(() => {
     </div>
   )
 }
+
+
+const Weather = ({country}) => {
+  const [weather, setWeather] = useState({})
+  const lat = country.latlng[0]
+  const lon = country.latlng[1]
+  const capital = country.capital
+
+  useEffect(() => {
+    axios
+      .get(`https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_API_KEY}`)
+      .then(response => {
+        setWeather(response.data)
+      })
+  }, [])
+
+
+  return (
+    <div>
+      <h1>Weather in {capital}</h1>
+      {weather}
+    </div>
+  )
+}
+
+
 
 export default App
