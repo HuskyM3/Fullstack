@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import axios, { Axios } from 'axios'
 
 
 const Note = ({ note }) => {
@@ -87,27 +88,19 @@ const ShowPersons =({persons, newS}) => {
 
 
 const App = () => {
-  const [persons, setNotes] = useState([
-    {
-      //id: 1,
-      name: 'Teemu Teekkari',
-      number: 123,
-    },
-    {
-      //id: 2,
-      name: 'Anna Arkkari',
-      number: 223,
-    },
-    {
-      //id: 3,
-      name: 'new',
-      number: 331,
-    }
-  ])
+  const [persons, setNotes] = useState([])
   const [newNote, setNewNote] = useState('') 
   const [newNumber, setNewNumber] = useState('') 
   const [newS, setNewS] = useState('') 
   
+useEffect(() => {
+    axios
+      .get('http://localhost:3001/persons')
+      .then(response => {
+        setNotes(response.data)
+      })
+  }, [])
+
   return (
     <div>
       <h1>Phonebook</h1>
