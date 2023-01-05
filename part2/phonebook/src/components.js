@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import axios, { Axios } from 'axios'
-import serverWork from './serverComp'
 
 
 const Note = ({ note }) => {
@@ -47,18 +46,15 @@ const PersonForm = ({persons, setNotes, newNote, setNewNote, newNumber, setNewNu
     const test = persons.find(n=> n.name === noteObject.name)
     console.log(test)
     if (test === undefined ){
-      serverWork.add(noteObject).then(note =>{
-        setNotes(persons.concat(noteObject))
-        setNewNote('')
-        setNewNumber('')
-      })
+      setNotes(persons.concat(noteObject))
+      setNewNote('')
+      setNewNumber('')
 
     }else {
       alert(noteObject.name + ' is already added to the phonebook')
     }
   }
 
-  
 return (
   <form onSubmit={addNote}>
   <div>name: 
@@ -92,42 +88,4 @@ const ShowPersons =({persons, newS}) => {
 }
 
 
-const App = () => {
-  const [persons, setNotes] = useState([])
-  const [newNote, setNewNote] = useState('') 
-  const [newNumber, setNewNumber] = useState('') 
-  const [newS, setNewS] = useState('') 
-  
-useEffect(() => {
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        setNotes(response.data)
-      })
-  }, [])
-
-  return (
-    <div>
-      <h1>Phonebook</h1>
-
-      <Filter newS={newS} setNewS={setNewS} />
-
-
-      <h2>add a new</h2>
-
-      <PersonForm 
-      persons={persons}
-      setNotes={setNotes}
-      newNote={newNote}
-      setNewNote={setNewNote}
-      newNumber={newNumber}
-      setNewNumber={setNewNumber}
-      />
-    
-      <h2>Numbers</h2>
-      <ShowPersons persons={persons} newS={newS}/>
-    </div>
-  )
-}
-
-export default App
+export default {ShowPersons, PersonForm, Filter}
