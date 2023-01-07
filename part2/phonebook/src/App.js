@@ -3,9 +3,12 @@ import axios, { Axios } from 'axios'
 import serverWork from './serverComp'
 
 
-const Note = ({ note }) => {
+const Note = ({ note, serverDel }) => {
   return (
-    <div>{note.name} {note.number}</div>
+    <div>{note.name} {note.number}
+    <button onClick={serverDel}>Delete</button>
+    </div>
+    
   )
 }
 
@@ -58,7 +61,7 @@ const PersonForm = ({persons, setNotes, newNote, setNewNote, newNumber, setNewNu
     }
   }
 
-  
+
 return (
   <form onSubmit={addNote}>
   <div>name: 
@@ -79,14 +82,23 @@ return (
 )
 }
 
-const ShowPersons =({persons, newS}) => {
-  const newPersons = persons.filter(name => name.name.toLowerCase().includes(newS.toLowerCase()))
 
+
+
+const ShowPersons =({persons, newS, setNotes, single}) => {
+  const newPersons = persons.filter(name => name.name.toLowerCase().includes(newS.toLowerCase()))
+  const deleteButton = id => {
+    const theID = newPersons.find(n=> n.id === id)
+    console.log(theID)
+    if (window.confirm(`delete ${theID.name} `)) {
+      serverWork.serverDelete(id, theID)
+      setNotes(newPersons.filter(n=> n.id !== id))
+    }
+  }
   return (
+    //tähän ehkä pitäis saada päivityetty versio 
     <div>
-    {newPersons.map(note => 
-      <Note key={note.name} note={note} />
-      )}
+      <Note note={single} serverDel={() => deleteButton(single.id)} />
       </div>
   )
 }
@@ -125,7 +137,8 @@ useEffect(() => {
       />
     
       <h2>Numbers</h2>
-      <ShowPersons persons={persons} newS={newS}/>
+      {persons.map(n=><ShowPersons key={n.name}  persons={persons} newS={newS} setNotes={setNotes} single={n}/>)}
+      
     </div>
   )
 }

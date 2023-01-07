@@ -12,9 +12,13 @@ const add = noteObject => {
   })
   )
 }
+const serverDelete = (id, newObject) => {
+  const request = axios.delete(`${baseUrl}/${id}`, newObject)
+  return request.then(response => response.data)
+}
 
 
-export default {add}
+export default {add, serverDelete}
 
 
 
