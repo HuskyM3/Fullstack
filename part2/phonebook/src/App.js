@@ -126,7 +126,7 @@ const PopUpBar =(setMessage, noteObject, oType) => {
 
 
 const ShowPersons =({persons, newS, setNotes, single, setMessage}) => {
-  const newPersons = persons.filter(name => name.name.toLowerCase().includes(newS.toLowerCase()))
+  const newPersons = persons
   const deleteButton = id => {
     const theID = newPersons.find(n=> n.id === id)
     console.log(theID)
@@ -137,7 +137,6 @@ const ShowPersons =({persons, newS, setNotes, single, setMessage}) => {
       }).catch(err=>{
         PopUpBar(setMessage, theID.name, 'already removed from server')
       })
-      
     }
   }
   return (
@@ -198,7 +197,7 @@ useEffect(() => {
       />
     
       <h2>Numbers</h2>
-      {persons.map(n=><ShowPersons 
+      {persons.filter(name => name.name.toLowerCase().includes(newS.toLowerCase())).map(n=><ShowPersons 
       key={n.name}  persons={persons} 
       newS={newS} setNotes={setNotes} single={n} 
       setMessage={setMessage}/>)}
