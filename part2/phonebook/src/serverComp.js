@@ -1,7 +1,15 @@
 
 import axios from 'axios'
 
-const baseUrl = 'http://localhost:3001/persons'
+const baseUrl = 'http://localhost:3001/api/persons'
+
+const getAll = () => {
+
+  const request = axios.get('http://localhost:3000')
+
+  return request.then(response => response.data)
+
+}
 
 const add = noteObject => {
   const request = axios.post(baseUrl, noteObject)
@@ -17,7 +25,7 @@ const update = (id, newObject) => {
   return request.then(response => response.data)
 }
 
-export default {add, serverDelete, update}
+export default {add, serverDelete, update, getAll}
 
 
 

@@ -170,8 +170,9 @@ const App = () => {
   const [message, setMessage] = useState(null)
   
 useEffect(() => {
-    axios
-      .get('http://localhost:3001/persons')
+ // serverWork.getAll  
+  axios
+     .get('http://localhost:3001/api/persons')
       .then(response => {
         setNotes(response.data)
       })
