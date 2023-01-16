@@ -170,11 +170,12 @@ const App = () => {
   const [message, setMessage] = useState(null)
   
 useEffect(() => {
- // serverWork.getAll  
-  axios
-     .get('http://localhost:3001/api/persons')
+ serverWork.getAll()
+  
+  //   .get('/api/persons') //.get('https://restless-butterfly-3150.fly.dev/api/persons')
       .then(response => {
-        setNotes(response.data)
+        setNotes(response)
+  
       })
   }, [])
 
