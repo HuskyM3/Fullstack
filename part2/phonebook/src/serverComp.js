@@ -1,7 +1,7 @@
 
 import axios from 'axios'
 
-const baseUrl = 'https://restless-butterfly-3150.fly.dev/api/persons'
+const baseUrl = '/api/persons'
 
 const getAll = () => {
 

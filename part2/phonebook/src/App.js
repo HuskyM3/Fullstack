@@ -15,7 +15,7 @@ const Note = ({ note, serverDel }) => {
 }
 
 
-const Filter = ({newS, setNewS}) => { // tämä pitää korjata
+const Filter = ({newS, setNewS}) => { 
   const handleSearchChange = (event) => {
     console.log(event.target.value)
     setNewS(event.target.value)
@@ -57,7 +57,10 @@ const PersonForm = ({persons, setNotes, newNote, setNewNote, newNumber, setNewNu
         setNotes(persons.concat(noteObject))
         setNewNote('')
         setNewNumber('')
-        PopUpBar(setMessage, noteObject.name, 'added')
+        PopUpBar(setMessage, noteObject.name, ' was added')
+      }).catch(error=> {
+        console.log(error.response.data.error)
+        PopUpBar(setMessage, error.response.data.error, '')
       })
       
 
@@ -67,7 +70,7 @@ const PersonForm = ({persons, setNotes, newNote, setNewNote, newNumber, setNewNu
         serverWork.update(test.id, noteObject).then(m=>
           setNotes(persons.map(n=> n.id !== test.id ? n : m))
           ).then(n=>{
-            PopUpBar(setMessage, noteObject.name, 'changed')
+            PopUpBar(setMessage, noteObject.name, 'was changed')
           })
         setNewNote('')
         setNewNumber('')
@@ -98,11 +101,11 @@ return (
 }
 
 
-const Notification = ({ message }) => {
+const Notification = ({ message, color }) => {
   if (message === null) {
     return null
   }
-  if(message.includes('already removed from server')){ //not best solution but working one 
+  if(message.includes('was already removed from server') || message.includes('Person validation failed')){ 
   return (
     <div className='error'>
       {message}
@@ -116,8 +119,8 @@ const Notification = ({ message }) => {
     }
 }
 
-const PopUpBar =(setMessage, noteObject, oType) => {
-  setMessage(`${noteObject} was ${oType}`)
+const PopUpBar =(setMessage, noteObject, oType, color) => {
+  setMessage(`${noteObject} ${oType}`)
   setTimeout(()=> {
     setMessage(null)
   }, 2000)
@@ -132,10 +135,10 @@ const ShowPersons =({persons, newS, setNotes, single, setMessage}) => {
     console.log(theID)
     if (window.confirm(`delete ${theID.name} `)) {
       serverWork.serverDelete(id, theID).then(n=>{
-        PopUpBar(setMessage, theID.name, 'deleted')
+        PopUpBar(setMessage, theID.name, 'was deleted')
         setNotes(newPersons.filter(n=> n.id !== id))
       }).catch(err=>{
-        PopUpBar(setMessage, theID.name, 'already removed from server')
+        PopUpBar(setMessage, theID.name, 'was already removed from server')
       })
     }
   }
@@ -171,11 +174,8 @@ const App = () => {
   
 useEffect(() => {
  serverWork.getAll()
-  
-  //   .get('/api/persons') //.get('https://restless-butterfly-3150.fly.dev/api/persons')
       .then(response => {
         setNotes(response)
-  
       })
   }, [])
 
