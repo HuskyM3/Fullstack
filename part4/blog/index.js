@@ -1,22 +1,24 @@
-require('dotenv').config()
-const http = require('http')
+//require('dotenv').config()
+//const http = require('http')
+const config = require('./utils/config')
+const app = require('./app')
+const logger = require('./utils/logger')
+//const mongoose = require('mongoose')
+
+//const server = http.createServer(app)
+/*
 const express = require('express')
 const app = express()
 const cors = require('cors')
-const mongoose = require('mongoose')
+*/
+//mongoose.set('strictQuery',false)
+//app.use(cors())
+//app.use(express.json())
+//const mongoUrl = process.env.MONGODB_URI
+//console.log('connecting to ', mongoUrl)
+//mongoose.connect(mongoUrl)
 
-mongoose.set('strictQuery',false)
-
-app.use(cors())
-app.use(express.json())
-
-const mongoUrl = process.env.MONGODB_URI
-
-console.log('connecting to ', mongoUrl)
-
-mongoose.connect(mongoUrl)
-
-
+/*
 const blogSchema = new mongoose.Schema({
     title: String,
     author: String,
@@ -44,7 +46,14 @@ app.post('/api/blogs', (request, response) => {
     })
 })
 
+*/
+app.listen(config.PORT, () => {
+    logger.info(`Server running on port ${config.PORT}`)
+  })
+
+/*
 const PORT = 3003
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
+*/
