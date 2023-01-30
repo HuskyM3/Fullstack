@@ -74,9 +74,9 @@ test('notes are returned as json', async () => {
 })
 
 
-  test('note without content is not added', async () => {
+test('note without content is not added', async () => {
     const newNote = {
-      url: '2314'
+      author: 'sddsf'
     }
   
     await api
@@ -84,9 +84,9 @@ test('notes are returned as json', async () => {
       .send(newNote)
       .expect(400)
   
-    const response = await api.get('/api/blogs')
+    const notesAtEnd = await helper.notesInDb()
   
-    expect(response.body).toHaveLength(initial<initialBlogs.length)
+    expect(notesAtEnd).toHaveLength(helper.initialBlogs.length)
   })
 
 
