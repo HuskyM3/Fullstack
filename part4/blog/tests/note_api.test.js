@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const supertest = require('supertest')
+const helper = require('./test_helper')
 const app = require('../app')
 const api = supertest(app)
 const Blog = require('../models/blog')
@@ -13,48 +14,30 @@ test('notes are returned as json', async () => {
     .expect('Content-Type', /application\/json/)
 })
 
-// kaksi seuraavaa testiä eivät toimi
 
 
-  /*    title: String,
-    author: String,
-    url: String,
-    likes: Number
-    */
-  const initialBlogs = [
-    {
-      title: 'HTML is easy',
-      author: 'false',
-      url: '3243242',
-      likes: 22222,
-    },
-    {
-        title: 'Browser can execute only JavaScript',
-        author: 'false',
-        url: '3243242',
-        likes: 1111,
-      },
-  ]
   
   beforeEach(async () => {
     await Blog.deleteMany({})
-    let noteObject = new Blog(initialBlogs[0])
+    let noteObject = new Blog(helper.initialBlogs[0])
     await noteObject.save()
-    noteObject = new Blog(initialBlogs[1])
+    noteObject = new Blog(helper.initialBlogs[1])
     await noteObject.save()
   })
 
 
+  test('notes are returned as json', async () => {
+    await api
+      .get('/api/blogs')
+      .expect(200)
+      .expect('Content-Type', /application\/json/)
+  })
 
-afterAll(async () => {
-  await mongoose.connection.close()
-})
 
-
-test('there are two notes', async () => {
+  test('all notes are returned', async () => {
     const response = await api.get('/api/blogs')
-    //console.log(response.body)
-    expect(response.body).toHaveLength(initialBlogs.length)
+  
+    expect(response.body).toHaveLength(helper.initialBlogs.length)
   })
   
   test('a specific note is within the returned notes', async () => {
@@ -65,3 +48,49 @@ test('there are two notes', async () => {
       'Browser can execute only JavaScript'
     )
   })
+
+
+  test('a valid note can be added', async () => {
+    const newNote = {
+      title: 'async/await simplifies making async calls',
+      author: 'true',
+      url: 'asd',
+      likes: 23423,
+    }
+  
+    await api
+    .post('/api/blogs')
+    .send(newNote)
+    .expect(201)
+    .expect('Content-Type', /application\/json/)
+
+  const notesAtEnd = await helper.notesInDb()
+  expect(notesAtEnd).toHaveLength(helper.initialBlogs.length + 1)
+
+  const contents = notesAtEnd.map(n => n.title)
+  expect(contents).toContain(
+    'async/await simplifies making async calls'
+  )
+})
+
+
+  test('note without content is not added', async () => {
+    const newNote = {
+      url: '2314'
+    }
+  
+    await api
+      .post('/api/blogs')
+      .send(newNote)
+      .expect(400)
+  
+    const response = await api.get('/api/blogs')
+  
+    expect(response.body).toHaveLength(initial<initialBlogs.length)
+  })
+
+
+  afterAll(async () => {
+    await mongoose.connection.close()
+  })
+  
