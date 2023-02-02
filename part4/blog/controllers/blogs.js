@@ -7,7 +7,7 @@ blogRouter.get('/', async (request, response) => {
   response.json(blogs)
   })
   
-  blogRouter.post('/', async (request, response) => {
+  blogRouter.post('/', async (request, response, next) => {
     
     const body = request.body
 
@@ -18,8 +18,11 @@ blogRouter.get('/', async (request, response) => {
       likes: body.likes,
     })
   
-    const savedNote = await note.save()
-    response.status(201).json(savedNote)
+    try{
+      const savedNote = await note.save()
+      response.status(201).json(savedNote)
+    } catch(exeption){next(exeption)}
+
     /*
     const blog = new Blog(request.body)
     console.log(blog)
