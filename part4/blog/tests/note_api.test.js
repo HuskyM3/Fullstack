@@ -19,10 +19,13 @@ test('notes are returned as json', async () => {
   
   beforeEach(async () => {
     await Blog.deleteMany({})
-    let noteObject = new Blog(helper.initialBlogs[0])
-    await noteObject.save()
-    noteObject = new Blog(helper.initialBlogs[1])
-    await noteObject.save()
+    console.log('cleared')
+
+    for (let blog of helper.initialBlogs) {
+        let blogObject = new Blog(blog)
+        await blogObject.save()
+    }
+    console.log('done')
   })
 
 
@@ -65,6 +68,7 @@ test('notes are returned as json', async () => {
     .expect('Content-Type', /application\/json/)
 
   const notesAtEnd = await helper.notesInDb()
+  console.log(notesAtEnd)
   expect(notesAtEnd).toHaveLength(helper.initialBlogs.length + 1)
 
   const contents = notesAtEnd.map(n => n.title)
@@ -76,7 +80,7 @@ test('notes are returned as json', async () => {
 
 test('note without content is not added', async () => {
     const newNote = {
-      author: 'sddsf'
+      author: 'sds',
     }
   
     await api
@@ -85,10 +89,38 @@ test('note without content is not added', async () => {
       .expect(400)
   
     const notesAtEnd = await helper.notesInDb()
+    //console.log(notesAtEnd)
   
     expect(notesAtEnd).toHaveLength(helper.initialBlogs.length)
   })
 
+
+  test('id check', async () => {
+    const response = await api.get('/api/blogs')
+    //console.log(response.body)
+    response.body.forEach(element => {
+        console.log(element.id)
+        expect(element.id).toBeDefined()
+    })
+  })
+
+  test('blog without likes is 0', async () => {
+    const newNote = {
+      title: 'sddsf',
+      author: 'asdf'
+    }
+  
+    await api
+      .post('/api/blogs')
+      .send(newNote)
+      .expect(201)
+      .expect('Content-Type', /application\/json/)
+  
+    const notesAtEnd = await helper.notesInDb()
+    const content = notesAtEnd.map(r=> r.likes).reverse()[0]
+    //console.log(content)
+    expect(content).toBe(0)
+  }) 
 
   afterAll(async () => {
     await mongoose.connection.close()
