@@ -122,6 +122,45 @@ test('note without content is not added', async () => {
     expect(content).toBe(0)
   }) 
 
+
+
+  test('blog without title', async () => {
+    const newNote = {
+      author: 'sds',
+      url: 'asdfs'
+
+    }
+  
+    await api
+      .post('/api/blogs')
+      .send(newNote)
+      .expect(400)
+  
+    const notesAtEnd = await helper.notesInDb()
+    //console.log(notesAtEnd)
+  
+    expect(notesAtEnd).toHaveLength(helper.initialBlogs.length)
+  })
+
+  test('blog without url', async () => {
+    const newNote = {
+      author: 'sds',
+      title: 'asdfs'
+
+    }
+  
+    await api
+      .post('/api/blogs')
+      .send(newNote)
+      .expect(400)
+  
+    const notesAtEnd = await helper.notesInDb()
+    //console.log(notesAtEnd)
+  
+    expect(notesAtEnd).toHaveLength(helper.initialBlogs.length)
+  })
+
+
   afterAll(async () => {
     await mongoose.connection.close()
   })
