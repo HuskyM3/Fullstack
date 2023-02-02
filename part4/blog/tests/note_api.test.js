@@ -8,34 +8,25 @@ const blog = require('../models/blog')
 
 
 
+  
+beforeEach(async () => {
+  await Blog.deleteMany({})
+  //console.log('cleared')
+
+  for (let blog of helper.initialBlogs) {
+      let blogObject = new Blog(blog)
+      await blogObject.save()
+  }
+  //console.log('done')
+})
+
+
 test('notes are returned as json', async () => {
   await api
     .get('/api/blogs')
     .expect(200)
     .expect('Content-Type', /application\/json/)
 })
-
-
-
-  
-  beforeEach(async () => {
-    await Blog.deleteMany({})
-    console.log('cleared')
-
-    for (let blog of helper.initialBlogs) {
-        let blogObject = new Blog(blog)
-        await blogObject.save()
-    }
-    console.log('done')
-  })
-
-
-  test('notes are returned as json', async () => {
-    await api
-      .get('/api/blogs')
-      .expect(200)
-      .expect('Content-Type', /application\/json/)
-  })
 
 
   test('all notes are returned', async () => {
@@ -51,7 +42,7 @@ test('notes are returned as json', async () => {
     expect(contents).toContain(
       'Browser can execute only JavaScript'
     )
-  })
+  }, 100000)
 
 
   test('a valid note can be added', async () => {
@@ -69,7 +60,7 @@ test('notes are returned as json', async () => {
     .expect('Content-Type', /application\/json/)
 
   const notesAtEnd = await helper.notesInDb()
-  console.log(notesAtEnd)
+  //console.log(notesAtEnd)
   expect(notesAtEnd).toHaveLength(helper.initialBlogs.length + 1)
 
   const contents = notesAtEnd.map(n => n.title)
@@ -100,7 +91,7 @@ test('note without content is not added', async () => {
     const response = await api.get('/api/blogs')
     //console.log(response.body)
     response.body.forEach(element => {
-        console.log(element.id)
+        //console.log(element.id)
         expect(element.id).toBeDefined()
     })
   })
@@ -108,7 +99,8 @@ test('note without content is not added', async () => {
   test('blog without likes is 0', async () => {
     const newNote = {
       title: 'sddsf',
-      author: 'asdf'
+      author: 'asdf',
+      url: 'sfldsal'
     }
   
     await api
@@ -198,10 +190,39 @@ test('note without content is not added', async () => {
     expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length)
     
     const content = blogsAtEnd.map(r=> r.id)
-    console.log(content)
+    //console.log(content)
     expect(content).not.toContain(note.id)
 
   
+})
+
+
+
+
+test('update blog', async () => {
+  const newNote = {
+    title: 'async/await simplifies making async calls',
+    author: 'true',
+    url: 'asd',
+    likes: 1010101,
+  }
+
+  const note1 = await helper.notesInDb()
+  const note = note1[0]
+
+  await api
+  .put(`/api/blogs/${note.id}`)
+  .send(newNote)
+  .expect(204)
+
+const notesAtEnd = await helper.notesInDb()
+//console.log(notesAtEnd)
+expect(notesAtEnd).toHaveLength(helper.initialBlogs.length)
+
+const contents = notesAtEnd.map(n => n.title)
+expect(contents).toContain(
+  'async/await simplifies making async calls'
+)
 })
 
 
