@@ -4,6 +4,7 @@ const helper = require('./test_helper')
 const app = require('../app')
 const api = supertest(app)
 const Blog = require('../models/blog')
+const blog = require('../models/blog')
 
 
 
@@ -159,6 +160,49 @@ test('note without content is not added', async () => {
   
     expect(notesAtEnd).toHaveLength(helper.initialBlogs.length)
   })
+
+
+  test('delete note', async () => {
+    const newNote = {
+      title: 'note to delete',
+      author: 'true',
+      url: 'asd',
+      likes: 23423,
+    }
+  
+    await api
+    .post('/api/blogs')
+    .send(newNote)
+    .expect(201)
+    .expect('Content-Type', /application\/json/)
+
+    const notesAtEnd = await helper.notesInDb()
+    //console.log(notesAtEnd)
+    expect(notesAtEnd).toHaveLength(helper.initialBlogs.length + 1)
+    const contents = notesAtEnd.map(n => n.title)
+    expect(contents).toContain(
+        'note to delete'
+    )
+
+   const note1 = await helper.notesInDb()
+   const note = note1[0]
+
+   //console.log(note.id)
+
+    await api
+    .delete(`/api/blogs/${note.id}`)
+    .expect(204)
+
+    const blogsAtEnd = await helper.notesInDb()
+    //console.log(blogsAtEnd)
+    expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length)
+    
+    const content = blogsAtEnd.map(r=> r.id)
+    console.log(content)
+    expect(content).not.toContain(note.id)
+
+  
+})
 
 
   afterAll(async () => {
