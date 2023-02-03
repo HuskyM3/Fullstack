@@ -11,3 +11,19 @@ content-type: application/json
     "url": "String",
     "likes": 1
 }
+
+
+###
+POST http://localhost:3003/api/users/ HTTP/1.1
+content-type: application/json
+
+{
+    "username": "root",
+    "name": "Superuser",
+    "password": "salainen"
+}
+
+###
+
+GET http://localhost:3003/api/users
+

@@ -1,0 +1,56 @@
+Arguments: 
+  /usr/local/bin/node /usr/local/bin/yarn add bcrypt
+
+PATH: 
+  /opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/opt/homebrew/bin:/opt/homebrew/sbin
+
+Yarn version: 
+  1.22.19
+
+Node version: 
+  18.13.0
+
+Platform: 
+  darwin arm64
+
+Trace: 
+  Error: connect ENETUNREACH 2606:4700::6810:1423:443
+      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1487:16)
+
+npm manifest: 
+  {
+    "name": "blog",
+    "version": "0.0.1",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+      "test": "cross-env NODE_ENV=test jest --verbose --runInBand",
+      "start": "cross-env NODE_ENV=production node index.js",
+      "dev": "cross-env NODE_ENV=development nodemon index.js"
+    },
+    "author": "Markus Minkkinen",
+    "license": "MIT",
+    "dependencies": {
+      "cors": "^2.8.5",
+      "cross-env": "^7.0.3",
+      "dotenv": "^16.0.3",
+      "express": "^4.18.2",
+      "express-async-errors": "^3.1.1",
+      "mongoose": "^6.8.4"
+    },
+    "devDependencies": {
+      "jest": "^29.4.1",
+      "nodemon": "^2.0.20",
+      "supertest": "^6.3.3"
+    },
+    "jest": {
+      "testEnvironment": "node",
+      "globalTeardown": "./tests/teardown.js"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
