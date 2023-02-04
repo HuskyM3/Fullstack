@@ -9,9 +9,29 @@ content-type: application/json
     "title": "String",
     "author": "String",
     "url": "String",
-    "likes": 1
+    "likes": 1,
+    "userId": "63de563afe5415adf1ba29e4"
+}
+###
+POST http://localhost:3003/api/blogs/ HTTP/1.1
+content-type: application/json
+
+{
+    "title": "String",
+    "author": "String",
+    "url": "String",
+    "likes": 1,
 }
 
+###
+POST http://localhost:3003/api/users/ HTTP/1.1
+content-type: application/json
+
+{
+    "username": "momooo",
+    "name": "Superuser",
+    "password": "salainesdfn"
+}
 
 ###
 POST http://localhost:3003/api/users/ HTTP/1.1
