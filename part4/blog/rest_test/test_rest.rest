@@ -4,24 +4,24 @@ GET http://localhost:3003/api/blogs
 ###
 POST http://localhost:3003/api/blogs/ HTTP/1.1
 content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5ldyIsImlkIjoiNjNkZTczNThkYTNhYjc1ZDdhNTYyYWNmIiwiaWF0IjoxNjc1NTI3MDEwfQ.J96xX0Dg5Ei0Pc1YdeD5Y7cvFDCuILjeFMagZpgR3Pw
 
 {
     "title": "String",
     "author": "String",
     "url": "String",
     "likes": 1,
-    "userId": "63de563afe5415adf1ba29e4"
+    "userId": "63de7358da3ab75d7a562acf"
 }
+
 ###
-POST http://localhost:3003/api/blogs/ HTTP/1.1
+DELETE  http://localhost:3003/api/blogs/63de8589793918b5dfc9092a  HTTP/1.1
 content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5ldyIsImlkIjoiNjNkZTczNThkYTNhYjc1ZDdhNTYyYWNmIiwiaWF0IjoxNjc1NTI3MDEwfQ.J96xX0Dg5Ei0Pc1YdeD5Y7cvFDCuILjeFMagZpgR3Pw
 
-{
-    "title": "String",
-    "author": "String",
-    "url": "String",
-    "likes": 1,
-}
+
+
+
 
 ###
 POST http://localhost:3003/api/users/ HTTP/1.1
@@ -38,7 +38,7 @@ POST http://localhost:3003/api/users/ HTTP/1.1
 content-type: application/json
 
 {
-    "username": "root",
+    "username": "new",
     "name": "Superuser",
     "password": "salainen"
 }
@@ -52,9 +52,10 @@ GET http://localhost:3003/api/users
 POST http://localhost:3003/api/login/ HTTP/1.1
 content-type: application/json
 
+
 {
-    "username": "root",
-    "password": "salainaen"
+    "username": "new",
+    "password": "salainen"
 }
 
 
