@@ -5,7 +5,12 @@ import loginService from './services/login'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
-  const [newBlog, setNewBlog] = useState('')
+  const [newBlog, setNewBlog] = useState({
+    title: '',
+    url: '',
+    author: '',
+    likes: ''
+  })
 
   const [username, setUsername] = useState('') 
   const [password, setPassword] = useState('')
@@ -57,22 +62,34 @@ const App = () => {
   const addNote = (event) => {
     event.preventDefault()
     const noteObject = {
-      title: newBlog,
-      author: 'test',
-      url: 'place',
+      title: newBlog.title,
+      url: newBlog.url,
+      author: newBlog.author,
+      likes: newBlog.likes,
+      //url: newBlog.url,
     }
 
     blogService
       .create(noteObject)
         .then(returnedNote => {
         setBlogs(blogs.concat(returnedNote))
-        setNewBlog('')
+        setNewBlog({
+          title: '',
+          url: '',
+          author: '',
+          likes: ''
+        })
       })
   }
 
   const handleNoteChange = (event) => {
-    setNewBlog(event.target.value)
+    const {name, value} = event.target
+    setNewBlog({
+      ...newBlog,
+      [name] : value
+    })
   }
+  // here is problem 
 
 
   const loginForm = () => (
@@ -101,11 +118,35 @@ const App = () => {
 
   const blogForm = () => (
     <form onSubmit={addNote}>
+      <div>title: 
       <input
-        value={newBlog}
+        value={newBlog.title}
+        name='title'
         onChange={handleNoteChange}
       />
-      <button type="submit">save</button>
+      </div>
+      <div> url: 
+      <input
+      value={newBlog.url}
+      name='url'
+      onChange={handleNoteChange}
+      />
+      </div>
+      <div> author: 
+      <input
+      value={newBlog.author}
+      name='author'
+      onChange={handleNoteChange}
+      />
+      </div>
+      <div> likes: 
+      <input
+      value={newBlog.likes}
+      name='likes'
+      onChange={handleNoteChange}
+      />
+      </div>
+      <button type="submit">create</button>
     </form>  
   )
 
@@ -115,6 +156,8 @@ const App = () => {
     event.preventDefault()
     window.localStorage.removeItem('loggedBlogappUser')
     setUser(null)
+    // huom mahdollisia erikoisuuksia tiedossa,
+    // koska tokeineita ei käsitellä erikseen!!!
   }
 
 
