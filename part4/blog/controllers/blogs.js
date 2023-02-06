@@ -23,7 +23,7 @@ blogRouter.get('/', async (request, response) => {
     const token = request.token
     const user2 = request.user2
     const body = request.body
-    checkToken(token, user2, response)
+    tokenCheck(token, user2, response)
 
  
     //const user = await User.findById(body.userId)
@@ -50,7 +50,7 @@ blogRouter.get('/', async (request, response) => {
     const user = request.user2
     //console.log(user)
 
-    checkToken(token, user, response)
+    tokenCheck(token, user, response)
 
     const blog = await Blog.findById(request.params.id)
     //console.log(blog)
