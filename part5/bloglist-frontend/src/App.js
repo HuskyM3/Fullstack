@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login'
+import './css/visuals.css'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -59,7 +60,7 @@ const App = () => {
     }
   }
 
-  const addNote = (event) => {
+  const addNote = async (event) => {
     event.preventDefault()
     const noteObject = {
       title: newBlog.title,
@@ -68,10 +69,9 @@ const App = () => {
       likes: newBlog.likes,
       //url: newBlog.url,
     }
-
-    blogService
-      .create(noteObject)
-        .then(returnedNote => {
+    try{
+    const returnedNote = await blogService.create(noteObject)
+        
         setBlogs(blogs.concat(returnedNote))
         setNewBlog({
           title: '',
@@ -79,8 +79,21 @@ const App = () => {
           author: '',
           likes: ''
         })
-      })
-  }
+        setErrorMessage(`a new blog ${noteObject.title} by ${noteObject.author} added`)
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000)
+      
+      }catch (exception){
+        setErrorMessage('invalid blog')
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000)
+      }
+
+    
+    }
+  
 
   const handleNoteChange = (event) => {
     const {name, value} = event.target
@@ -89,10 +102,19 @@ const App = () => {
       [name] : value
     })
   }
+
+  const Notification = ({message, type}) => {
+      if (message===null){
+        return (<div></div>)
+      }else if (message.startsWith('Wrong') || message.startsWith( 'invalid')) return(<div className='error'>{message}</div>)
+      else return(<div className='working'>{message}</div>)
+    
+  }
   // here is problem 
 
 
   const loginForm = () => (
+    <div> <h2>log in to application</h2>
     <form onSubmit={handleLogin}>
       <div>
         username
@@ -113,7 +135,8 @@ const App = () => {
         />
       </div>
       <button type="submit">login</button>
-    </form>      
+    </form>
+    </div>     
   )
 
   const blogForm = () => (
@@ -164,16 +187,19 @@ const App = () => {
 
   return (
     <div>
-      <h2>blogs</h2>
-
+      
+      <Notification message={errorMessage} />
       {!user && loginForm()} 
       {user && <div>
-        <p>{user.name} logged in</p> 
+        <h2>blogs</h2>
+        <div>{user.name} logged in 
         <form
         onSubmit={logout}>
           <button type="submit">logout</button>
         </form>
+        </div>
           
+          <h2>create new</h2>
 
           {blogForm()}
 
