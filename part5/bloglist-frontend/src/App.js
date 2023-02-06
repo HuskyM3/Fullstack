@@ -10,6 +10,7 @@ const App = () => {
   const [username, setUsername] = useState('') 
   const [password, setPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState(null)
+  //const [isLogin, setLogin] = useState(false)
 
   const [user, setUser] = useState(null)
   
@@ -25,6 +26,7 @@ const App = () => {
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
       setUser(user)
+      //setLogin(true) // miten tokeneiden kanssa toimitaan?
       blogService.setToken(user.token)
     }
   }, [])
@@ -40,7 +42,7 @@ const App = () => {
       window.localStorage.setItem(
         'loggedBlogappUser', JSON.stringify(user)
       )
-      
+      //setLogin(true)
       setUser(user)
       setUsername('')
       setPassword('')
@@ -109,13 +111,27 @@ const App = () => {
 
 
 
+  const logout = (event) => {
+    event.preventDefault()
+    window.localStorage.removeItem('loggedBlogappUser')
+    setUser(null)
+  }
+
+
+
   return (
     <div>
       <h2>blogs</h2>
 
       {!user && loginForm()} 
       {user && <div>
-        <p>{user.name} logged in</p>
+        <p>{user.name} logged in</p> 
+        <form
+        onSubmit={logout}>
+          <button type="submit">logout</button>
+        </form>
+          
+
           {blogForm()}
 
           {blogs.map(blog =>
