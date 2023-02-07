@@ -2,7 +2,10 @@ import { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login'
+import LoginForm from './components/LoginForm'
+import Notification from './components/Notification'
 import './css/visuals.css'
+
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -17,6 +20,7 @@ const App = () => {
   const [password, setPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState(null)
   //const [isLogin, setLogin] = useState(false)
+  const [loginVisible, setLoginVisible] = useState(false)
 
   const [user, setUser] = useState(null)
   
@@ -102,7 +106,7 @@ const App = () => {
       [name] : value
     })
   }
-
+/*
   const Notification = ({message, type}) => {
       if (message===null){
         return (<div></div>)
@@ -110,10 +114,34 @@ const App = () => {
       else return(<div className='working'>{message}</div>)
     
   }
-  // here is problem 
+*/
 
 
-  const loginForm = () => (
+  const loginForm = () => {
+    const hideWhenVisible = { display: loginVisible ? 'none' : '' }
+    const showWhenVisible = { display: loginVisible ? '' : 'none' }
+
+    return (
+      <div>
+        <div style={hideWhenVisible}>
+          <button onClick={() => setLoginVisible(true)}>log in</button>
+        </div>
+        <div style={showWhenVisible}>
+          <LoginForm
+            username={username}
+            password={password}
+            handleUsernameChange={({ target }) => setUsername(target.value)}
+            handlePasswordChange={({ target }) => setPassword(target.value)}
+            handleSubmit={handleLogin}
+          />
+          <button onClick={() => setLoginVisible(false)}>cancel</button>
+        </div>
+      </div>
+    )
+  }
+  
+  /*
+  (
     <div> <h2>log in to application</h2>
     <form onSubmit={handleLogin}>
       <div>
@@ -138,6 +166,7 @@ const App = () => {
     </form>
     </div>     
   )
+  */
 
   const blogForm = () => (
     <form onSubmit={addNote}>
