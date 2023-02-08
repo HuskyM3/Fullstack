@@ -11,18 +11,20 @@ import BlogForm from './components/BlogForm'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
+  /*
   const [newBlog, setNewBlog] = useState({
     title: '',
     url: '',
     author: '',
     likes: ''
   })
+  */
 
   const [username, setUsername] = useState('') 
   const [password, setPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState(null)
   //const [isLogin, setLogin] = useState(false)
-  const [loginVisible, setLoginVisible] = useState(false)
+  //const [loginVisible, setLoginVisible] = useState(false)
 
   const [user, setUser] = useState(null)
   
@@ -204,7 +206,7 @@ const App = () => {
           
 
           {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
+        <Blog key={blog.id} blog={blog} user={username} />
       )}
 
         </div>
