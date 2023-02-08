@@ -20,9 +20,11 @@ const App = () => {
   
 
   useEffect(() => {
-    blogService.getAll().then(blogs =>
+    blogService.getAll().then(blogs =>{
+      blogs.sort((n,m) => m.likes - n.likes)
       setBlogs( blogs )
       
+    }
     )  
   }, [])
 
@@ -107,6 +109,7 @@ const App = () => {
            //.user = {username: user.username, name: user.name, id: returnedNote.id}
            const updated = blogs.map(n=> n.id === id ? blog : n)
            setBlogs(updated)
+           
            // tässä lisätään vain sellainen blog jossa ei ole kaikki user tietoja mukana
            // pitäisiköhän lisätä jotenkin user bäkkäri käytökseen
            //console.log(blogs)

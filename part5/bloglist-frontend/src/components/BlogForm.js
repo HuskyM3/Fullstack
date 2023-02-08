@@ -66,15 +66,20 @@ const BlogForm = ({createBlog}) => {
       onChange={handleNoteChange}
       />
       </div>
-      <div> likes: 
+      
+      <button type="submit">create</button>
+    </form>  
+  )}
+
+
+  /*
+<div> likes: 
       <input
       value={newBlog.likes}
       name='likes'
       onChange={handleNoteChange}
       />
       </div>
-      <button type="submit">create</button>
-    </form>  
-  )}
 
+  */
   export default BlogForm
