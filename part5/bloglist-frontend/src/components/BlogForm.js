@@ -28,7 +28,6 @@ const BlogForm = ({createBlog}) => {
                 url: '',
                 author: '',
                 likes: '',
-                user: ''
               })
           }
         
@@ -37,7 +36,7 @@ const BlogForm = ({createBlog}) => {
        
         const {name, value} = event.target
         //console.log(value)
-        console.log(newBlog)
+        //console.log(newBlog)
         setNewBlog({
           ...newBlog,
           [name] : value

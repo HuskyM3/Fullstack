@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-const Blog = ({blog}) => {
+const Blog = ({blog, update}) => {
 
   const blogStyle = {
     paddingTop: 10,
@@ -15,12 +15,22 @@ const Blog = ({blog}) => {
   const hideWhenVisible = { display: visible ? 'none' : '' }
   const showWhenVisible = { display: visible ? '' : 'none' }
 
+
+// tämä pitää hoitaa staten avulla 
+
+// ei välttämättä tarvetta, koska liket renderöidään appin kautta
+const like = (event) => {
+        event.preventDefault()
+        const updated = {...blog, likes: blog.likes +1}
+        update(updated, blog.id)   
+      }
+
   const toggleVisibility = () => {
     setVisible(!visible)
   }
 const space = ' '
 
-
+// voisi refacoroida järkeväksi, jos jaksaa
   return (
   <div style={blogStyle}>
     <div style={hideWhenVisible}>
@@ -39,7 +49,7 @@ const space = ' '
       <p>{blog.url}</p>
       <p>
         likes: {blog.likes} 
-        <button>like</button>
+        <button onClick={like}>like</button>
       </p>
       <p>
         {blog.user.username}
