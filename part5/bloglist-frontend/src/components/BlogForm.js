@@ -3,11 +3,12 @@ import { useState } from "react"
 
 const BlogForm = ({createBlog}) => {
     
+
     const [newBlog, setNewBlog] = useState({
         title: '',
         url: '',
         author: '',
-        likes: ''
+        likes: '',
       })
 
     const addNote = (event) => {
@@ -26,7 +27,8 @@ const BlogForm = ({createBlog}) => {
                 title: '',
                 url: '',
                 author: '',
-                likes: ''
+                likes: '',
+                user: ''
               })
           }
         
@@ -34,7 +36,7 @@ const BlogForm = ({createBlog}) => {
     const handleNoteChange = (event) => {
        
         const {name, value} = event.target
-        console.log(value)
+        //console.log(value)
         console.log(newBlog)
         setNewBlog({
           ...newBlog,

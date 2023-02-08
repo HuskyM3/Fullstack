@@ -11,20 +11,10 @@ import BlogForm from './components/BlogForm'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
-  /*
-  const [newBlog, setNewBlog] = useState({
-    title: '',
-    url: '',
-    author: '',
-    likes: ''
-  })
-  */
-
+ 
   const [username, setUsername] = useState('') 
   const [password, setPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState(null)
-  //const [isLogin, setLogin] = useState(false)
-  //const [loginVisible, setLoginVisible] = useState(false)
 
   const [user, setUser] = useState(null)
   
@@ -32,15 +22,16 @@ const App = () => {
   useEffect(() => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
+      
     )  
   }, [])
 
+console.log(blogs)
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
       setUser(user)
-      //setLogin(true) // miten tokeneiden kanssa toimitaan?
       blogService.setToken(user.token)
     }
   }, [])
@@ -73,21 +64,16 @@ const App = () => {
   }
 
   const addNote = async (noteObject) => {
-    /*event.preventDefault()
-    const noteObject = {
-      title: newBlog.title,
-      url: newBlog.url,
-      author: newBlog.author,
-      likes: newBlog.likes,
-      //url: newBlog.url,
-    }
-    */
    console.log('aa')
    console.log(noteObject)
     try{
     const returnedNote = await blogService.create(noteObject)
-        
+        //console.log(returnedNote)
+        returnedNote.user = {username: user.username, name: user.name, id: returnedNote.id}
         setBlogs(blogs.concat(returnedNote))
+        // tässä lisätään vain sellainen blog jossa ei ole kaikki user tietoja mukana
+        // pitäisiköhän lisätä jotenkin user bäkkäri käytökseen
+        console.log(blogs)
         blogFormRef.current.toggleVisibility()
         setErrorMessage(`a new blog ${noteObject.title} by ${noteObject.author} added`)
         setTimeout(() => {
@@ -104,63 +90,6 @@ const App = () => {
     
     }
   
-
-
-
-/*
-  const loginForm = () => {
-    const hideWhenVisible = { display: loginVisible ? 'none' : '' }
-    const showWhenVisible = { display: loginVisible ? '' : 'none' }
-
-    return (
-      <div>
-        <div style={hideWhenVisible}>
-          <button onClick={() => setLoginVisible(true)}>log in</button>
-        </div>
-        <div style={showWhenVisible}>
-          <LoginForm
-            username={username}
-            password={password}
-            handleUsernameChange={({ target }) => setUsername(target.value)}
-            handlePasswordChange={({ target }) => setPassword(target.value)}
-            handleSubmit={handleLogin}
-          />
-          <button onClick={() => setLoginVisible(false)}>cancel</button>
-        </div>
-      </div>
-    )
-  }
-  */
-  /*
-  (
-    <div> <h2>log in to application</h2>
-    <form onSubmit={handleLogin}>
-      <div>
-        username
-          <input
-          type="text"
-          value={username}
-          name="Username"
-          onChange={({ target }) => setUsername(target.value)}
-        />
-      </div>
-      <div>
-        password
-          <input
-          type="password"
-          value={password}
-          name="Password"
-          onChange={({ target }) => setPassword(target.value)}
-        />
-      </div>
-      <button type="submit">login</button>
-    </form>
-    </div>     
-  )
-  */
-
-
-
 
   const logout = (event) => {
     event.preventDefault()
@@ -206,7 +135,7 @@ const App = () => {
           
 
           {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} user={username} />
+        <Blog key={blog.id} blog={blog}/>
       )}
 
         </div>

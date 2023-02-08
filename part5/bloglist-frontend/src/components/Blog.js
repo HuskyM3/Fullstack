@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-const Blog = ({blog, user}) => {
+const Blog = ({blog}) => {
 
   const blogStyle = {
     paddingTop: 10,
@@ -42,7 +42,7 @@ const space = ' '
         <button>like</button>
       </p>
       <p>
-        {user}
+        {blog.user.username}
       </p>
 
 
