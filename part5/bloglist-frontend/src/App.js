@@ -41,7 +41,7 @@ const App = () => {
 
   const loginRef = useRef()
   const blogFormRef = useRef()
-  const likeRef = useRef()
+  //const likeRef = useRef()
 
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -87,8 +87,6 @@ const App = () => {
           setErrorMessage(null)
         }, 5000)
       }
-
-    
     }
 
 
@@ -121,6 +119,19 @@ const App = () => {
            }, 1)
          }
        }
+
+
+    const del = async (id) => {
+      if(window.confirm('moi moi')){
+      try{
+        await blogService.remove(id)
+        const updated = blogs.filter(n=> n.id !== id)
+        setBlogs(updated)
+      }catch(exception){
+        setErrorMessage('sorry I cannot let you do that')
+      }
+    }
+    }
 
 
 
@@ -171,7 +182,7 @@ const App = () => {
           
 
           {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} update={like}/>
+        <Blog key={blog.id} blog={blog} update={like} remove={del} user={user.username}/>
       )}
 
         </div>

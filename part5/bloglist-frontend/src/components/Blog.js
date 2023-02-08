@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-const Blog = ({blog, update}) => {
+const Blog = ({blog, update, remove, user}) => {
 
   const blogStyle = {
     paddingTop: 10,
@@ -23,6 +23,11 @@ const like = (event) => {
         event.preventDefault()
         const updated = {...blog, likes: blog.likes +1}
         update(updated, blog.id)   
+      }
+
+const del = (event) => {
+        event.preventDefault()
+        remove(blog.id)   
       }
 
   const toggleVisibility = () => {
@@ -54,8 +59,8 @@ const space = ' '
       <p>
         {blog.user.username}
       </p>
-
-
+      {user === blog.user.username ? <button onClick={del}>remove</button> : ''}
+      
     
   </div>
   </div>  
