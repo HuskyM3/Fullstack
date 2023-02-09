@@ -33,24 +33,19 @@ const Blog = ( { blog, update, remove, user } ) => {
   const toggleVisibility = () => {
     setVisible(!visible)
   }
-  const space = ' '
+
 
   // voisi refacoroida järkeväksi, jos jaksaa
   return (
     <div style={blogStyle}>
-      <div style={hideWhenVisible}>
-        <p>{blog.title} {blog.author}
-          {space}
-          <button onClick={toggleVisibility}>show</button>
-        </p>
+
+      <div  className='blog'>
+        {blog.title} {blog.author}
+        <button onClick={toggleVisibility} style={hideWhenVisible}>show</button>
+        <button onClick={toggleVisibility} style={showWhenVisible}>hide</button>
       </div>
 
-      <div style={showWhenVisible}>
-        <p>
-          {blog.title} {blog.author}
-          {space}
-          <button onClick={toggleVisibility}>hide</button>
-        </p>
+      <div style={showWhenVisible} className='fullblog'>
         <p>{blog.url}</p>
         <p>
         likes: {blog.likes}
@@ -60,13 +55,12 @@ const Blog = ( { blog, update, remove, user } ) => {
           {blog.user.username}
         </p>
         {user === blog.user.username ? <button onClick={del}>remove</button> : ''}
-
-
       </div>
+
     </div>
   )
 }
-
+//{blog.title} {blog.author}
 //note: tässä varamaan pääsee käyttämään forward ref kun
 //lisätään add like ja lähetetään tietoa bäkkäriin
 
