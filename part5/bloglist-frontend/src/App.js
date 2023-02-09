@@ -11,24 +11,23 @@ import BlogForm from './components/BlogForm'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
- 
-  const [username, setUsername] = useState('') 
+
+  const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState(null)
 
   const [user, setUser] = useState(null)
-  
+
 
   useEffect(() => {
-    blogService.getAll().then(blogs =>{
+    blogService.getAll().then(blogs => {
       blogs.sort((n,m) => m.likes - n.likes)
       setBlogs( blogs )
-      
     }
-    )  
+    )
   }, [])
 
-//console.log(blogs)
+  //console.log(blogs)
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
     if (loggedUserJSON) {
@@ -45,7 +44,7 @@ const App = () => {
 
   const handleLogin = async (event) => {
     event.preventDefault()
-    
+
     try {
       const user = await loginService.login({
         username, password,
@@ -67,71 +66,71 @@ const App = () => {
   }
 
   const addNote = async (noteObject) => {
-   console.log('aa')
-   console.log(noteObject)
+    console.log('aa')
+    console.log(noteObject)
     try{
-    const returnedNote = await blogService.create(noteObject)
-        //console.log(returnedNote)
-        returnedNote.user = {username: user.username, name: user.name, id: user.id}
-        setBlogs(blogs.concat(returnedNote))
-        console.log(blogs)
-        blogFormRef.current.toggleVisibility()
-        setErrorMessage(`a new blog ${noteObject.title} by ${noteObject.author} added`)
-        setTimeout(() => {
-          setErrorMessage(null)
-        }, 5000)
-      
-      }catch (exception){
-        setErrorMessage('invalid blog')
-        setTimeout(() => {
-          setErrorMessage(null)
-        }, 5000)
-      }
+      const returnedNote = await blogService.create(noteObject)
+      //console.log(returnedNote)
+      returnedNote.user = { username: user.username, name: user.name, id: user.id }
+      setBlogs(blogs.concat(returnedNote))
+      console.log(blogs)
+      blogFormRef.current.toggleVisibility()
+      setErrorMessage(`a new blog ${noteObject.title} by ${noteObject.author} added`)
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+
+    }catch (exception){
+      setErrorMessage('invalid blog')
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
     }
+  }
 
 
-    const like = async (blog, id)=> {
-      console.log('bb')
-      // id menee vihkoon 
-       try{
-        const blogBlog = {
-          user: blog.user.id,
-          likes: blog.likes,
-          author: blog.author, 
-          title: blog.title,
-          url: blog.url,
-        }
+  const like = async (blog, id) => {
+    console.log('bb')
+    // id menee vihkoon
+    try{
+      const blogBlog = {
+        user: blog.user.id,
+        likes: blog.likes,
+        author: blog.author,
+        title: blog.title,
+        url: blog.url,
+      }
 
-       await blogService.update(id, blogBlog)
-           console.log(blogBlog)
-           //.user = {username: user.username, name: user.name, id: returnedNote.id}
-           const updated = blogs.map(n=> n.id === id ? blog : n)
-           setBlogs(updated)
-           
-           // tässä lisätään vain sellainen blog jossa ei ole kaikki user tietoja mukana
-           // pitäisiköhän lisätä jotenkin user bäkkäri käytökseen
-           //console.log(blogs)
-           //likeRef.current.toggleVisibility()       
-         }catch (exception){
-           setErrorMessage('')
-           setTimeout(() => {
-             setErrorMessage(null)
-           }, 1)
-         }
-       }
+      await blogService.update(id, blogBlog)
+      console.log(blogBlog)
+      //.user = {username: user.username, name: user.name, id: returnedNote.id}
+      const updated = blogs.map(n => n.id === id ? blog : n)
+      setBlogs(updated)
+
+    // tässä lisätään vain sellainen blog jossa ei ole kaikki user tietoja mukana
+    // pitäisiköhän lisätä jotenkin user bäkkäri käytökseen
+    //console.log(blogs)
+    //likeRef.current.toggleVisibility()
+    }catch (exception){
+      setErrorMessage('')
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 1)
+    }
+  }
 
 
-    const del = async (id) => {
-      if(window.confirm('moi moi')){
+  const del = async (id) => {
+    if(window.confirm('moi moi')){
       try{
         await blogService.remove(id)
-        const updated = blogs.filter(n=> n.id !== id)
+        const updated = blogs.filter(n => n.id !== id)
         setBlogs(updated)
       }catch(exception){
         setErrorMessage('sorry I cannot let you do that')
       }
     }
-    }
+  }
 
 
 
@@ -150,43 +149,43 @@ const App = () => {
 
   return (
     <div>
-      
+
       <Notification message={errorMessage} />
-      {!user && 
+      {!user &&
       <Togglable buttonLabel='login' ref={loginRef}>
         <LoginForm
-            username={username}
-            password={password}
-            handleUsernameChange={({ target }) => setUsername(target.value)}
-            handlePasswordChange={({ target }) => setPassword(target.value)}
-            handleSubmit={handleLogin}
+          username={username}
+          password={password}
+          handleUsernameChange={({ target }) => setUsername(target.value)}
+          handlePasswordChange={({ target }) => setPassword(target.value)}
+          handleSubmit={handleLogin}
         />
       </Togglable>
-      
-      
-      } 
+
+
+      }
       {user && <div>
         <h2>blogs</h2>
-        <div>{user.name} logged in 
-        <form
-        onSubmit={logout}>
-          <button type="submit">logout</button>
-        </form>
+        <div>{user.name} logged in
+          <form
+            onSubmit={logout}>
+            <button type="submit">logout</button>
+          </form>
         </div>
-          
-          <h2>create new</h2>
-          <Togglable buttonLabel='create' ref={blogFormRef}>
-            <BlogForm createBlog={addNote}/>
 
-          </Togglable>
-          
+        <h2>create new</h2>
+        <Togglable buttonLabel='create' ref={blogFormRef}>
+          <BlogForm createBlog={addNote}/>
 
-          {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} update={like} remove={del} user={user.username}/>
-      )}
+        </Togglable>
 
-        </div>
-      } 
+
+        {blogs.map(blog =>
+          <Blog key={blog.id} blog={blog} update={like} remove={del} user={user.username}/>
+        )}
+
+      </div>
+      }
 
 
     </div>
