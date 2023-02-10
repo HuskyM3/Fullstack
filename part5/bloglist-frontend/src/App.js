@@ -78,7 +78,7 @@ const App = () => {
       setErrorMessage(`a new blog ${noteObject.title} by ${noteObject.author} added`)
       setTimeout(() => {
         setErrorMessage(null)
-      }, 5000)
+      }, 2000)
 
     }catch (exception){
       setErrorMessage('invalid blog')
@@ -149,7 +149,7 @@ const App = () => {
 
   return (
     <div>
-
+      <h1>Blog App</h1>
       <Notification message={errorMessage} />
       {!user &&
       <Togglable buttonLabel='login' ref={loginRef}>
@@ -173,7 +173,7 @@ const App = () => {
           </form>
         </div>
 
-        <h2>create new</h2>
+        <h2>add new</h2>
         <Togglable buttonLabel='create' ref={blogFormRef}>
           <BlogForm createBlog={addNote}/>
 

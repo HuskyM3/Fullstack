@@ -47,6 +47,7 @@ const BlogForm = ( { createBlog } ) => {
     <form onSubmit={addNote} className='blogForm'>
       <div>title:
         <input
+          id='title'
           value={newBlog.title}
           name='title'
           onChange={handleNoteChange}
@@ -55,6 +56,7 @@ const BlogForm = ( { createBlog } ) => {
       </div>
       <div> url:
         <input
+          id='url'
           value={newBlog.url}
           name='url'
           onChange={handleNoteChange}
@@ -63,6 +65,7 @@ const BlogForm = ( { createBlog } ) => {
       </div>
       <div> author:
         <input
+          id='author'
           value={newBlog.author}
           name='author'
           onChange={handleNoteChange}
@@ -70,7 +73,7 @@ const BlogForm = ( { createBlog } ) => {
         />
       </div>
 
-      <button type="submit">create</button>
+      <button id='create' type="submit">create</button>
     </form>
   )}
 
