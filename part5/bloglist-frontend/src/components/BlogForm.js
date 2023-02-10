@@ -44,12 +44,13 @@ const BlogForm = ( { createBlog } ) => {
   }
 
   return (
-    <form onSubmit={addNote}>
+    <form onSubmit={addNote} className='blogForm'>
       <div>title:
         <input
           value={newBlog.title}
           name='title'
           onChange={handleNoteChange}
+          placeholder='title'
         />
       </div>
       <div> url:
@@ -57,6 +58,7 @@ const BlogForm = ( { createBlog } ) => {
           value={newBlog.url}
           name='url'
           onChange={handleNoteChange}
+          placeholder='url'
         />
       </div>
       <div> author:
@@ -64,6 +66,7 @@ const BlogForm = ( { createBlog } ) => {
           value={newBlog.author}
           name='author'
           onChange={handleNoteChange}
+          placeholder='author'
         />
       </div>
 
