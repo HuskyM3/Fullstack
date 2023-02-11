@@ -12,11 +12,13 @@ const initialState = {
 
         return newState
       case 'OK':
-        return state
+        const okState = {...state, ok: state.ok+1}
+        return okState
       case 'BAD':
-        return state
-      case 'ZERO':
-        return state
+        const badState = {...state, bad: state.bad+1}
+        return badState
+      case 'RESET':
+        return {...state, bad: 0, good:0, ok:0}
       default: return state
     }
   

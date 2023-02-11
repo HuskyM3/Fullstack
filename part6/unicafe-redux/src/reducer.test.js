@@ -32,4 +32,22 @@ describe('unicafe reducer', () => {
       bad: 0
     })
   })
+
+  test('good press 2', () => {
+    const action = {
+      type: 'GOOD'
+    }
+    const state = initialState
+
+    deepFreeze(state)
+    const newState = counterReducer(state, action)
+    const newest = counterReducer(newState, action)
+    expect(newest).toEqual({
+      good: 2,
+      ok: 0,
+      bad: 0
+    })
+  })
+
+
 })
