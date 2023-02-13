@@ -18,12 +18,17 @@ const Anecdote = ({ note, handleClick }) => {
 
 const Anecdotes = () => {
   const dispatch = useDispatch()
-  const notes = useSelector(state => state.anecdotes)
-  const filter = useSelector(state => state.filter)
-
+  //const anecdotes = useSelector(state => state.anecdotes)
+  //const filter = useSelector(state => state.filter)
+  const {anecdotes, filter} = useSelector(state => state)
+  
+  //console.log(anecdotes)
+  console.log('pöö')
+  console.log(filter)
+console.log(anecdotes.filter(n=> n.content.includes(filter)))
   return(
     <div>
-      {notes.sort((n,m)=> m.votes - n.votes)
+      {[...anecdotes].sort((n,m)=> m.votes - n.votes)
       .filter(note => note.content.includes(filter))
       .map(note =>
         <Anecdote
