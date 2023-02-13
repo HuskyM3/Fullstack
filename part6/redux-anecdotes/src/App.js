@@ -1,6 +1,7 @@
 import Anecdotes from "./components/Anecdotes"
 import NewAnacdote from "./components/NewAnacdote"
 import Filter from "./components/Filter"
+import Notification from "./components/Notification"
 import { useDispatch } from "react-redux"
 import { useEffect } from 'react'
 import service from './services/anecdotes'
@@ -19,6 +20,7 @@ const App = () => {
   return(
     <div>
       <h2>Anecdotes</h2>
+      <Notification />
       <Filter />
       <Anecdotes />
       <h3>Add new</h3>

@@ -1,4 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { notificaitonChange } from './notificationReducer'
+import { useDispatch } from 'react-redux'
 const anecdotesAtStart = [
   'If it hurts, do it more often',
   'Adding manpower to a late software project makes it later!',
@@ -19,6 +21,7 @@ const asObject = (anecdote) => {
 }
 
 const initialState = anecdotesAtStart.map(asObject)
+//const dispatch = useDispatch()
 
 
 const anecdoteSlice = createSlice({
@@ -35,6 +38,7 @@ const anecdoteSlice = createSlice({
     },
     vote(state, action) {
       console.log(action)
+      
       const id = action.payload
       console.log(state)
       const noteToChange = state.find(n => n.id === id)
@@ -44,11 +48,12 @@ const anecdoteSlice = createSlice({
         votes: noteToChange.votes+1 
       }
       console.log(changedNote)
+      //dispatch(notificaitonChange)
       return state.map(note =>
         note.id !== id ? note : changedNote 
       )
     }, 
-    appendNote(state, action) {
+     appendNote(state, action) {
       state.push(action.payload)
     },
     setNotes(state, action) {
@@ -58,7 +63,7 @@ const anecdoteSlice = createSlice({
 
 })
 
-
+/*
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case 'NEW_NOTE':
@@ -78,6 +83,7 @@ const reducer = (state = initialState, action) => {
     default: return state
   }
 }
+*/
 /*
 export const createNote = (content) => {
   return {
