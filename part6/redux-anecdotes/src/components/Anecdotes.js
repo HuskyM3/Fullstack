@@ -18,11 +18,14 @@ const Anecdote = ({ note, handleClick }) => {
 
 const Anecdotes = () => {
   const dispatch = useDispatch()
-  const notes = useSelector(state => state)
+  const notes = useSelector(state => state.anecdotes)
+  const filter = useSelector(state => state.filter)
 
   return(
     <div>
-      {notes.sort((n,m)=> m.votes - n.votes).map(note =>
+      {notes.sort((n,m)=> m.votes - n.votes)
+      .filter(note => note.content.includes(filter))
+      .map(note =>
         <Anecdote
           key={note.id}
           note={note}
