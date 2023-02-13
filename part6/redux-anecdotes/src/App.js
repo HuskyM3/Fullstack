@@ -42,12 +42,13 @@ export default App
 
 
 import Anecdotes from "./components/Anecdotes"
-//import NewNote from "./components/NewNote"
+import NewAnacdote from "./components/NewAnacdote"
 
 const App = () => {
   return(
     <div>
       <Anecdotes />
+      <NewAnacdote/>
     </div>
   )
 }

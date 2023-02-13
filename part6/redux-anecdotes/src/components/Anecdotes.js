@@ -22,7 +22,7 @@ const Anecdotes = () => {
 
   return(
     <div>
-      {notes.map(note =>
+      {notes.sort((n,m)=> m.votes - n.votes).map(note =>
         <Anecdote
           key={note.id}
           note={note}
