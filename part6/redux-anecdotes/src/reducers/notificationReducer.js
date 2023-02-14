@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 
-let initialState = ['moi']
+let initialState = ''
 
 
   const notificationSlice = createSlice({
@@ -16,6 +16,9 @@ let initialState = ['moi']
         console.log(content)
         return state
       },
+      notificationRemove(state, action){
+        return initialState
+      }
     },
   
   })

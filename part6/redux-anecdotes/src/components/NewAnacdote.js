@@ -13,6 +13,7 @@ const NewAnecdote = () => {
     //const newAnacdote = await services.createNew(content)
     dispatch(createNote(content))
     dispatch(notificationChange(`You added '${content}'`))
+    setTimeout(()=> dispatch(notificationChange('')),5000)
   }
 
   return (

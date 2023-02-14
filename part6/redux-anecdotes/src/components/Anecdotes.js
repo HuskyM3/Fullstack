@@ -33,6 +33,7 @@ const Anecdotes = () => {
     const content = event
     dispatch(vote(content.id))
     dispatch(notificationChange(`You liked '${event.content}'`))
+    setTimeout(()=> dispatch(notificationChange('')),5000)
   }
   const {anecdotes, filter} = useSelector(state => state)
   
