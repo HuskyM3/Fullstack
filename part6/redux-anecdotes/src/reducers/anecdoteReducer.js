@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { notificaitonChange } from './notificationReducer'
+
 import { useDispatch } from 'react-redux'
 const anecdotesAtStart = [
   'If it hurts, do it more often',
@@ -37,17 +37,17 @@ const anecdoteSlice = createSlice({
       })
     },
     vote(state, action) {
+      //console.log(action)
       console.log(action)
-      
       const id = action.payload
-      console.log(state)
+      //console.log(state)
       const noteToChange = state.find(n => n.id === id)
-      console.log(noteToChange)
+      //console.log(noteToChange)
       const changedNote = { 
         ...noteToChange, 
         votes: noteToChange.votes+1 
       }
-      console.log(changedNote)
+      //console.log(changedNote)
       //dispatch(notificaitonChange)
       return state.map(note =>
         note.id !== id ? note : changedNote 

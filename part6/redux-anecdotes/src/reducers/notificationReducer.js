@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 
-const initialState = 'moi'
+let initialState = ['moi']
 
 
   const notificationSlice = createSlice({
@@ -9,23 +9,18 @@ const initialState = 'moi'
     initialState,
     reducers: {
       notificationChange(state, action) {
+        console.log(state)
+        console.log(action)
         const content = action.payload
-        state.push({
-            content
-        })
+        state = action.payload
         console.log(content)
-        return content
+        return state
       },
-      notificationReducer(state, action) {
-      
-        return action.payload
-        
-      }
     },
   
   })
 
-  export const { notificaitonChange } = notificationSlice.actions
+  export const { notificationChange } = notificationSlice.actions
   export default notificationSlice.reducer
 
   
