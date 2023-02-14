@@ -1,5 +1,6 @@
 import { useDispatch } from 'react-redux'
 import { createNote } from '../reducers/anecdoteReducer'
+import { notificationChange } from '../reducers/notificationReducer'
 import services from '../services/anecdotes'
 
 const NewAnecdote = () => {
@@ -11,6 +12,7 @@ const NewAnecdote = () => {
     event.target.note.value = ''
     //const newAnacdote = await services.createNew(content)
     dispatch(createNote(content))
+    dispatch(notificationChange(`You added '${content}'`))
   }
 
   return (
