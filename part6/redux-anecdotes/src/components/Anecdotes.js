@@ -4,7 +4,7 @@ import { setNotification } from '../reducers/notificationReducer'
 
 const Anecdote = ({ note, handleClick }) => {
   //console.log(note)
-  const dispatch = useDispatch()
+ // const dispatch = useDispatch()
   
   return(
     <div key={note.id}>
@@ -31,15 +31,16 @@ const Anecdotes = () => {
     //console.log(event.content)
     //event.preventDefault()
     const content = event
-    dispatch(vote(content.id))
-    dispatch( setNotification(`You liked '${event.content}'`) )
+    console.log(content)
+    dispatch(vote(content))
+    dispatch( setNotification(`You liked '${event.content}'`, 5) )
     //dispatch(notificationChange(`You liked '${event.content}'`))
     //setTimeout(()=> dispatch(notificationRemove()), 5000)
     
   }
   const {anecdotes, filter} = useSelector(state => state)
   
-  //console.log(anecdotes)
+  console.log(anecdotes)
   //console.log('pöö')
   //console.log(filter)
 //console.log(anecdotes.filter(n=> n.content.includes(filter)))

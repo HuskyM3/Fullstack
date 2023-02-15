@@ -32,9 +32,9 @@ let initialState = ''
   export const { notificationChange, notificationRemove } = notificationSlice.actions
   export default notificationSlice.reducer
 
-  const setNotification = (content) => {
+  const setNotification = (content, action) => {
     return async dispatch => {
-        setTimeout(()=> dispatch(notificationRemove()), 5000)
+        setTimeout(()=> dispatch(notificationRemove()), 1000*action)
         dispatch(notificationChange(content))
     }
   }

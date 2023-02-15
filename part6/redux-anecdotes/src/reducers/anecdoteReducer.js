@@ -1,5 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
+import service from '../services/anecdotes'
+
 import { useDispatch } from 'react-redux'
 const anecdotesAtStart = [
   'If it hurts, do it more often',
@@ -28,15 +30,61 @@ const anecdoteSlice = createSlice({
   name: 'anecdote',
   initialState: [],
   reducers: {
-    createNote(state, action) {
+
+     appendNote(state, action) {
+      state.push(action.payload)
+    },
+    setNotes(state, action) {
+      return action.payload
+    },
+    updateAnecdote(state,action){
+      return state.map(note =>
+        note.id !== action.id ? note : action 
+      )
+    }
+  },
+
+})
+
+
+export const createNote = content => {
+  return async dispatch => {
+    const newNote = await service.createNew(content)
+    dispatch(appendNote(newNote))
+  }
+}
+
+export const vote = content => {
+  return async dispatch => {
+    const newNote = await service.vote(content)
+    const anecdotes = await service.getAll()
+    dispatch(setNotes(anecdotes))
+  }
+}
+
+
+export const initializeAnecdotes = () => {
+  return async dispatch => {
+    const notes = await service.getAll()
+    dispatch(setNotes(notes))
+  }
+}
+
+export const { appendNote, setNotes, updateAnecdote } = anecdoteSlice.actions
+export default anecdoteSlice.reducer
+
+
+/*    createNote(state, action) {
       const content = action.payload
       state.push({
           content, 
           votes: 0,
           id: getId(),
       })
-    },
-    vote(state, action) {
+
+
+
+          vote(state, action) {
       //console.log(action)
       console.log(action)
       const id = action.payload
@@ -53,56 +101,4 @@ const anecdoteSlice = createSlice({
         note.id !== id ? note : changedNote 
       )
     }, 
-     appendNote(state, action) {
-      state.push(action.payload)
-    },
-    setNotes(state, action) {
-      return action.payload
-    }
-  },
-
-})
-
-/*
-const reducer = (state = initialState, action) => {
-  switch (action.type) {
-    case 'NEW_NOTE':
-      return [...state, action.payload]
-    case 'VOTE':
-      const id = action.payload.id
-      const noteToChange = state.find(n => n.id === id)
-    console.log(noteToChange)
-      const changedNote = { 
-        ...noteToChange, 
-        votes: noteToChange.votes+1 
-      }
-      console.log(changedNote)
-      return state.map(note =>
-        note.id !== id ? note : changedNote 
-      )
-    default: return state
-  }
-}
-*/
-/*
-export const createNote = (content) => {
-  return {
-    type: 'NEW_NOTE',
-    payload: {
-      content,
-      id: getId(),
-      votes: 0,
-    }
-  }
-}
-
-
-export const vote = (id) => {
-  return {
-    type: 'VOTE',
-    payload: { id }
-  }
-}
-*/
-export const { createNote, vote, appendNote, setNotes } = anecdoteSlice.actions
-export default anecdoteSlice.reducer
+    },*/

@@ -10,10 +10,10 @@ const NewAnecdote = () => {
     event.preventDefault()
     const content = event.target.note.value
     event.target.note.value = ''
-    const newAnacdote = await services.createNew(content)
-    console.log(newAnacdote)
-    dispatch(createNote(newAnacdote.content))
-    dispatch( setNotification(`You added '${newAnacdote.content}'`) )
+    
+   
+    dispatch(createNote(content))
+    dispatch( setNotification(`You added '${content}'`, 10) )
   }
 
   return (
