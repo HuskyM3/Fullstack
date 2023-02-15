@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import {
   BrowserRouter as Router,
-  Routes, Route, Link, useParams
+  Routes, Route, Link, useParams, Navigate, useNavigate, useMatch
 } from 'react-router-dom'
 
 const Menu = () => {
@@ -34,7 +34,7 @@ const Anecdote = ({anecdotes}) => {
   return (  <div>
     <h2>{anecdote.content} by {anecdote.author}</h2>
       <p>has {anecdote.votes} votes</p>
-      <p>for more info see {anecdote.info}</p>
+      <p>for more info see <a href={`${anecdote.info}`}>{anecdote.info}</a></p>
   </div>)
 }
 
@@ -72,7 +72,7 @@ const Footer = () => (
   <div>
     Anecdote app for <a href='https://fullstackopen.com/'>Full Stack Open</a>.
 
-    See <a href='https://github.com/fullstack-hy2020/routed-anecdotes/blob/master/src/App.js'>https://github.com/fullstack-hy2020/routed-anecdotes/blob/master/src/App.js</a> for the source code.
+    See <a href='https://github.com/HuskyM3/Fullstack/tree/main/part7/routed-anecdotes'>https://github.com/HuskyM3/Fullstack/tree/main/part7/routed-anecdotes</a> for the source code.
   </div>
 )
 
@@ -80,7 +80,7 @@ const CreateNew = (props) => {
   const [content, setContent] = useState('')
   const [author, setAuthor] = useState('')
   const [info, setInfo] = useState('')
-
+  const navigate = useNavigate()
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -90,6 +90,10 @@ const CreateNew = (props) => {
       info,
       votes: 0
     })
+    setContent('')
+    setAuthor('')
+    setInfo('')
+    navigate('/')
   }
 
   return (
@@ -115,6 +119,15 @@ const CreateNew = (props) => {
 
 }
 
+const Notification = ({message}) =>{
+  return (
+    <div>
+      {message !== null ? <div>{message}</div> : <div></div>}
+    </div>
+  )
+}
+
+
 const App = () => {
   const [anecdotes, setAnecdotes] = useState([
     {
@@ -133,11 +146,13 @@ const App = () => {
     }
   ])
 
-  const [notification, setNotification] = useState('')
+  const [notification, setNotification] = useState(null)
 
   const addNew = (anecdote) => {
     anecdote.id = Math.round(Math.random() * 10000)
     setAnecdotes(anecdotes.concat(anecdote))
+    setNotification(`a new anecdote '${anecdote.content}' created!`)
+    setTimeout(()=> setNotification(null), 5000)
   }
 
   const anecdoteById = (id) =>
@@ -157,9 +172,12 @@ const App = () => {
     padding: 5
   }
 
+
+
   return (
     <Router>
       <h1>Software anecdotes</h1>
+      <Notification message={notification}/>
       <div>
         <Link style={padding} to='/'>anecdotes</Link>
         <Link style={padding} to='/create'>create</Link>
