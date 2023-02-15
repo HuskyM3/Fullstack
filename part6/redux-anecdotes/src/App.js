@@ -4,8 +4,7 @@ import Filter from "./components/Filter"
 import Notification from "./components/Notification"
 import { useDispatch } from "react-redux"
 import { useEffect } from 'react'
-import service from './services/anecdotes'
-import { initializeAnecdotes, setNotes } from "./reducers/anecdoteReducer"
+import { initializeAnecdotes } from "./reducers/anecdoteReducer"
 
 const App = () => {
 

@@ -2,7 +2,7 @@
   "anecdotes": [
     {
       "content": "If it hurts, do it more often",
-      "votes": 6,
+      "votes": 7,
       "id": "47145"
     },
     {
@@ -12,7 +12,7 @@
     },
     {
       "content": "The first 90 percent of the code accounts for the first 10 percent of the development time...The remaining 10 percent of the code accounts for the other 90 percent of the development time.",
-      "votes": 2,
+      "votes": 3,
       "id": "69581"
     },
     {
@@ -22,7 +22,7 @@
     },
     {
       "content": "Premature optimization is the root of all evil.",
-      "votes": 2,
+      "votes": 3,
       "id": "25170"
     },
     {
@@ -42,12 +42,12 @@
     },
     {
       "content": "zxc",
-      "votes": 2,
+      "votes": 3,
       "id": "Lwx4ea8"
     },
     {
       "content": "asdads",
-      "votes": 1,
+      "votes": 4,
       "id": "jAN0SRH"
     },
     {
@@ -57,7 +57,7 @@
     },
     {
       "content": "",
-      "votes": 1,
+      "votes": 2,
       "id": "PyV8RI1"
     },
     {
@@ -67,8 +67,13 @@
     },
     {
       "content": "adsf",
-      "votes": 1,
+      "votes": 2,
       "id": "eaVGGm8"
+    },
+    {
+      "content": "9292929292",
+      "votes": 2,
+      "id": "APdWABA"
     }
   ]
 }

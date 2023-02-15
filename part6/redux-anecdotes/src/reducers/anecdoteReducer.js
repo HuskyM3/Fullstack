@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 import service from '../services/anecdotes'
-
+/*
 import { useDispatch } from 'react-redux'
 const anecdotesAtStart = [
   'If it hurts, do it more often',
@@ -22,8 +22,8 @@ const asObject = (anecdote) => {
   }
 }
 
-const initialState = anecdotesAtStart.map(asObject)
-//const dispatch = useDispatch()
+//const initialState = anecdotesAtStart.map(asObject)
+*/
 
 
 const anecdoteSlice = createSlice({
@@ -56,7 +56,7 @@ export const createNote = content => {
 
 export const vote = content => {
   return async dispatch => {
-    const newNote = await service.vote(content)
+    await service.vote(content)
     const anecdotes = await service.getAll()
     dispatch(setNotes(anecdotes))
   }
