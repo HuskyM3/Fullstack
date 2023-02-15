@@ -12,18 +12,33 @@ let initialState = ''
         console.log(state)
         console.log(action)
         const content = action.payload
-        state = action.payload
+        state = content
         console.log(content)
-        return state
+        return (
+         state
+         )
       },
-      notificationRemove(state, action){
-        return initialState
+      notificationRemove (state, action){
+        setTimeout(()=> state,5000)
+
+        
+        state = null
+        
+        return state
       }
     },
   
   })
-
-  export const { notificationChange } = notificationSlice.actions
+  export const { notificationChange, notificationRemove } = notificationSlice.actions
   export default notificationSlice.reducer
+
+  const setNotification = (content) => {
+    return async dispatch => {
+        setTimeout(()=> dispatch(notificationRemove()), 5000)
+        dispatch(notificationChange(content))
+    }
+  }
+
+export {setNotification}
 
   

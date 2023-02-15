@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { vote } from '../reducers/anecdoteReducer'
-import { notificationChange } from '../reducers/notificationReducer'
+import { setNotification } from '../reducers/notificationReducer'
 
 const Anecdote = ({ note, handleClick }) => {
   //console.log(note)
@@ -25,15 +25,17 @@ const Anecdotes = () => {
   const dispatch = useDispatch()
   //const anecdotes = useSelector(state => state.anecdotes)
   //const filter = useSelector(state => state.filter)
-  const handleChange = (event) => {
+  const handleChange = async (event) => {
     // input-field value is in variable event.target.value
     //console.log(event.target.value)
     //console.log(event.content)
     //event.preventDefault()
     const content = event
     dispatch(vote(content.id))
-    dispatch(notificationChange(`You liked '${event.content}'`))
-    setTimeout(()=> dispatch(notificationChange('')),5000)
+    dispatch( setNotification(`You liked '${event.content}'`) )
+    //dispatch(notificationChange(`You liked '${event.content}'`))
+    //setTimeout(()=> dispatch(notificationRemove()), 5000)
+    
   }
   const {anecdotes, filter} = useSelector(state => state)
   
