@@ -19,7 +19,7 @@ let initialState = ''
          )
       },
       notificationRemove (state, action){
-        setTimeout(()=> state,5000)
+        //setTimeout(()=> state,5000)
 
         
         state = null

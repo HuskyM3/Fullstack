@@ -9,14 +9,14 @@ import { setNotes } from "./reducers/anecdoteReducer"
 
 const App = () => {
 
-  /*
+  
   const dispatch = useDispatch()
   useEffect(() => {
     service
       .getAll().then(notes => dispatch(setNotes(notes)))
   }, [dispatch])
 
-  */
+  
   return(
     <div>
       <h2>Anecdotes</h2>
