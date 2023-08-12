@@ -40,5 +40,6 @@ interface MultiplyValues {
     console.log(errorMessage);
   }
 
+  console.log('poo')
 
   

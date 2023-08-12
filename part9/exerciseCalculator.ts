@@ -13,16 +13,22 @@ interface View1 {
 const calculateExercises = (args: number[]): View1 => {
 
 
+
+
     return {
-    periodLength: 1,
-    trainingDays: 1,
+    periodLength: args.length,
+    trainingDays: args.filter(n=>n>0).length,
     success: true,
     rating: 1,
     ratingDescription: 'string',
     target: 2,
-    average: 2, 
+    average: args.reduce((n,m)=>n+m,0)/args.length, 
     }
 }
 
+try{
 
-console.log(calculateExercises([3, 0, 2, 4.5, 0, 3, 1]))
+    console.log(calculateExercises([3, 0, 2, 4.5, 0, 3, 1]))
+}catch{
+
+}
