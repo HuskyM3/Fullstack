@@ -17,13 +17,21 @@ interface MultiplyValues {
     }
   }
   
-  const multiplicator = (a: number, b: number, printText: string) => {
-    console.log(printText,  a * b);
+  const calculateBmi = (a: number, b: number, printText: string) => {
+    const value: number = b / (a*0.1*0.1*a);
+    if (value < 0.17){
+        return console.log(printText,  'under weight');
+    }if (value > 0.25){
+        return console.log(printText,  'over weight');
+    }else console.log(printText,  'normal weight');
+
+    
   }
   
   try {
     const { value1, value2 } = parseArguments(process.argv);
-    multiplicator(value1, value2, `Multiplied ${value1} and ${value2}, the result is:`);
+    calculateBmi(value1, value2, `Multiplied ${value1} and ${value2}, the result is:`);
+    console.log(calculateBmi(180, 74, 'test'))
   } catch (error: unknown) {
     let errorMessage = 'Something bad happened.'
     if (error instanceof Error) {
@@ -31,3 +39,6 @@ interface MultiplyValues {
     }
     console.log(errorMessage);
   }
+
+
+  
