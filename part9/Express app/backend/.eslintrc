@@ -25,6 +25,6 @@
     },
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
-      "project": "part9/Express app/tsconfig.json"
+      "project": "part9/Express app/backend/tsconfig.json"
     }
   }
