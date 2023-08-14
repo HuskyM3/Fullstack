@@ -3,7 +3,7 @@ export type Gender = 'male' | 'female' | 'other' ;
 
 
 export interface PatientEntry {
-    id: number;
+    id: string;
     name: string;
     dateOfBirth: string;
     ssn: string;
