@@ -1,4 +1,4 @@
-import { PatientEntry, DiagnosisEntry } from "../../src/types";
+import { PatientEntry } from "../../src/types";
 
 
 const patientEntries: PatientEntry[] = [
@@ -44,7 +44,7 @@ const patientEntries: PatientEntry[] = [
     }
 ];
 
-
+/*
 const diagnosisEntries: DiagnosisEntry[] = [
     {
       "code": "M24.2",
@@ -126,6 +126,6 @@ const diagnosisEntries: DiagnosisEntry[] = [
   ];
 
 
+*/
 
-
-export default {patientEntries, diagnosisEntries};
+export default patientEntries;
