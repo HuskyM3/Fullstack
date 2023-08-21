@@ -1,6 +1,7 @@
 import express from 'express';
 
-import diaryRouter from './src/routes/diaries';
+import patientRouter from './src/routes/diaries';
+import diagnosisRouter from './src/routes/diagnosis';
 const app = express();
 app.use(express.json());
 
@@ -12,7 +13,9 @@ app.get('/ping', (_req, res) => {
 });
 
 
-app.use('/api/diaries', diaryRouter);
+app.use('/api/patients', patientRouter);
+
+app.use('/api/diagnosis', diagnosisRouter);
 
 
 app.listen(PORT, () => {
