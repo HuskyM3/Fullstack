@@ -21,15 +21,19 @@ router.get('/:id', (req, res) => {
 });
 
 router.post('/', (_req, res) => {
-    const {name, dateOfBirth, ssn, gender, occupation} = req.body;
-    const newPatientEntry = diaryService.addDiary({
-      name,
-      dateOfBirth,
-      ssn,
-      gender,
-      occupation,
-    })
-    res.json(newPatientEntry);
-});
+  try {
+    const newPatientEntry = toNewPatientEntry(req.body);
+    const addedEntry = diaryService.addDiary(newPatientEntry);
+    res.json(addedEntry);
+  }catch (error: unknown) {
+    let errorMessage = 'Something went wrong.';
+    if (error instanceof Error) {
+      errorMessage += ' Error: ' + error.message;
+    }
+    res.status(400).send(errorMessage);
+  }
+  }
+  );
+
 
 export default router;
