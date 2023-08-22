@@ -1,6 +1,6 @@
 import patientsData from '../data/entries';
 
-import { v1 as uuid } from 'uuid'
+import { v1 as uuid } from 'uuid';
 
 import { NonSensitivePatnientEntry, PatientEntry, NewPatientEntry } from '../types';
 
@@ -29,9 +29,9 @@ const findById = (id: string): PatientEntry | undefined => {
 };
 
 const addDiary = (entry: NewPatientEntry): PatientEntry => {
-  const id = uuid()
+  const id = uuid();
   const newPatientEntry = {
-  id: uuid(),
+  id: id,
   ...entry
 };
 patients.push(newPatientEntry);
