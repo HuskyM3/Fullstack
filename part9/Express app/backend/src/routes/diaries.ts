@@ -1,6 +1,7 @@
 import express from 'express';
 
 import diaryService from '../services/diaryService';
+import toNewPatientEntry from '../utils';
 
 const router = express.Router();
 
@@ -22,7 +23,7 @@ router.get('/:id', (req, res) => {
 
 router.post('/', (_req, res) => {
   try {
-    const newPatientEntry = toNewPatientEntry(req.body);
+    const newPatientEntry = toNewPatientEntry(_req.body);
     const addedEntry = diaryService.addDiary(newPatientEntry);
     res.json(addedEntry);
   }catch (error: unknown) {
