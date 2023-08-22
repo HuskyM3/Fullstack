@@ -21,7 +21,15 @@ router.get('/:id', (req, res) => {
 });
 
 router.post('/', (_req, res) => {
-    res.send('Saving a diary!');
+    const {name, dateOfBirth, ssn, gender, occupation} = req.body;
+    const newPatientEntry = diaryService.addDiary({
+      name,
+      dateOfBirth,
+      ssn,
+      gender,
+      occupation,
+    })
+    res.json(newPatientEntry);
 });
 
 export default router;
