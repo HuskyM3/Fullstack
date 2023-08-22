@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.get('/', (_req, res) => {
 
-  res.send(diagnosisService.getNonSensitiveEntries()); // getNonSensitiveEntries
+  res.send(diagnosisService.getEntries()); // getNonSensitiveEntries
 });
 
 router.post('/', (_req, res) => {
